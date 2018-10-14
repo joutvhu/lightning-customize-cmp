@@ -1,0 +1,67 @@
+<aura:component >
+    <aura:attribute access="public" name="row" type="Integer" default="7"/>
+    <aura:attribute access="public" name="islist" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="hide" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="class" type="String" default=""/>
+    
+    <aura:attribute access="private" name="list" type="List" default="[0, 1, 2, 3, 4, 5, 6]"/>
+    <aura:attribute access="private" name="opacities" type="Object[]"
+                    default="['', 'opacity90', 'opacity80', 'opacity70', 'opacity60', 'opacity50', 'opacity40', 'opacity30', 'opacity20', 'opacity10']"/>
+    <aura:attribute access="private" name="mainstyle" type="String" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.islist}" action="{!c.changeIsList}"/>
+    <aura:handler name="change" value="{!v.hide}" action="{!c.changeHide}"/>
+    <aura:handler name="change" value="{!v.class}" action="{!c.changeClass}"/>
+    
+    <aura:if isTrue="{!v.islist}">
+        <div class="{!v.mainstyle}">
+            <aura:iteration items="{!v.opacities}" var="opacity">
+                <div class="forcePlaceholder">
+                    <div class="{!'placeholder table_list_line_item ' + opacity}">
+                        <div class="body border-bottom">
+                            <div class="text-body-col">
+                                <div class="text text-short">
+                                </div>
+                                <div class="text text-short">
+                                </div>
+                                <div class="text text-short">
+                                </div>
+                                <div class="text text-short">
+                                </div>
+                                <div class="text text-short">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aura:iteration>
+        </div>
+        <aura:set attribute="else">
+            <div class="{!v.mainstyle}">
+                <div class="placeholder detail">
+                    <div class="left-column">
+                        <aura:iteration items="{!v.list}" var="item">
+                            <div class="field border-bottom">
+                                <div class="text text-primary text-shorter text-thin">
+                                </div>
+                                <div class="text text-secondary text-medium text-thin">
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                    <div class="right-column">
+                        <aura:iteration items="{!v.list}" var="item">
+                            <div class="field border-bottom">
+                                <div class="text text-primary text-shorter text-thin">
+                                </div>
+                                <div class="text text-secondary text-medium text-thin">
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>
