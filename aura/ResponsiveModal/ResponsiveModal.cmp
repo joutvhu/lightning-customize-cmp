@@ -1,0 +1,53 @@
+<aura:component>
+    <aura:attribute access="public" name="type" type="String" default="modal"/>
+    <aura:attribute access="public" name="status" type="String" default="init"/>
+    <aura:attribute access="public" name="messageStatus" type="String" default="hide"/>
+    <aura:attribute access="public" name="title" type="String" description="The optional title of the modal. If it is empty, the header block is not displayed." />
+    <aura:attribute access="public" name="body" type="Aura.Component[]"/>
+    <aura:attribute access="public" name="showCancel" type="Boolean" default="true"/>
+    <aura:attribute access="public" name="showSaveAndNew" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="showOk" type="Boolean" default="true"/>
+    <aura:attribute access="public" name="diableOK" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="diableSaveAndNew" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="titleCancel" type="String" default="Cancel"/>
+    <aura:attribute access="public" name="titleSaveAndNew" type="String" default="Save &amp; New"/>
+    <aura:attribute access="public" name="titleOK" type="String" default="Save"/>
+    <aura:attribute access="public" name="size" type="String" default="medium"/>
+    <aura:attribute access="public" name="spinner" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="showTime" type="Integer" default="5000"/>
+    
+    <aura:method access="public" name="openModal" action="{!c.openModal}" description="Opens the modal"/>
+    <aura:method access="public" name="hideModal" action="{!c.hideModal}" description="Hide the modal"/>
+    <aura:method access="public" name="showModal" action="{!c.showModal}" description="Reshow the modal"/>
+    <aura:method access="public" name="closeModal" action="{!c.closeModal}" description="Closes the modal"/>
+    
+    <aura:method access="public" name="hideMessage" action="{!c.hideMessage}"/>
+    <aura:method access="public" name="showMessage" action="{!c.showMessage}">
+        <aura:attribute name="title" type="String"/>
+        <aura:attribute name="type" type="String" default="error"/>
+        <aura:attribute name="list" type="String[]"/>
+    </aura:method>
+    
+    <aura:attribute access="public" name="cancelAction" type="Aura.Action" default="{!c.closeModal}"/>
+    <aura:attribute access="public" name="saveAndNewAction" type="Aura.Action"/>
+    <aura:attribute access="public" name="okAction" type="Aura.Action" default="{!c.closeModal}"/>
+    <aura:attribute access="public" name="closedAction" type="Aura.Action"/>
+    
+    <aura:if isTrue="{!$Browser.isPhone || $Browser.isTablet}">
+        <c:MSA_MobileOverlay aura:id="caseOverlay" title="{!v.title}" spinner="{!v.spinner}" showTime="{!v.showTime}"
+                             status="{!v.status}" messageStatus="{!v.messageStatus}" titleOK="{!v.titleOK}" titleCancel="{!v.titleCancel}"
+                             showOk="{!v.showOk}" showCancel="{!v.showCancel}" diableOK="{!v.diableOK}"
+                             okAction="{!v.okAction}" cancelAction="{!v.cancelAction}" closedAction="{!v.closedAction}">
+            {!v.body}
+        </c:MSA_MobileOverlay>
+        <aura:set attribute="else">
+            <c:MSA_CommonModal aura:id="caseModal" title="{!v.title}" size="{!v.size}" showTime="{!v.showTime}" status="{!v.status}"
+                               messageStatus="{!v.messageStatus}" titleOK="{!v.titleOK}" titleSaveAndNew="{!v.titleSaveAndNew}" titleCancel="{!v.titleCancel}"
+                               showOk="{!v.showOk}" showSaveAndNew="{!v.showSaveAndNew}" showCancel="{!v.showCancel}"
+                               diableOK="{!v.diableOK}" diableSaveAndNew="{!v.diableSaveAndNew}"
+                               okAction="{!v.okAction}" saveAndNewAction="{!v.saveAndNewAction}" cancelAction="{!v.cancelAction}" closedAction="{!v.closedAction}">
+                {!v.body}
+            </c:MSA_CommonModal>
+        </aura:set>
+    </aura:if>
+</aura:component>

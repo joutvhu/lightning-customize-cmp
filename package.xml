@@ -8,6 +8,7 @@
         <members>Placeholder</members>
         <members>DesktopModal</members>
         <members>MobileModal</members>
+        <members>ResponsiveModal</members>
         <members>MultipleLookup</members>
         <name>AuraDefinitionBundle</name>
     </types>
