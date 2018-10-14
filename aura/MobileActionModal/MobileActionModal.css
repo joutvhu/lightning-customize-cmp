@@ -1,0 +1,15 @@
+.THIS .modal-container.slds-modal__container{
+    display: flex;
+    position: relative;
+    transition: transform .1s linear,opacity .1s linear;
+    justify-content: center;
+    margin: 0 2rem;
+    height: 100%;
+    padding: 3rem 0;
+    border-radius: .25rem;
+    width: auto;
+    min-width: min-content;
+}
+.THIS .modal-body.slds-modal__content {
+    padding: 0;
+}

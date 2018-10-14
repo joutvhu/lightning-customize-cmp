@@ -1,0 +1,36 @@
+<aura:component>
+    <aura:attribute access="public" name="type" type="String" default="overlay"/>
+    <aura:attribute access="public" name="status" type="String" default="init"/>
+    <aura:attribute access="public" name="title" type="String"/>
+    <aura:attribute access="public" name="body" type="Aura.Component[]"/>
+    <aura:attribute access="public" name="showCancel" type="Boolean" default="true"/>
+    <aura:attribute access="public" name="titleCancel" type="String" default="Cancel"/>
+    
+    <aura:attribute access="private" name="overlay" type="Object"/>
+    <aura:attribute access="private" name="components" type="Object"/>
+    
+    <aura:method access="public" name="openModal" action="{!c.openModal}" description="Opens the mobile overlay"/>
+    <aura:method access="public" name="hideModal" action="{!c.hideModal}" description="Hide the mobile overlay"/>
+    <aura:method access="public" name="showModal" action="{!c.showModal}" description="Reshow the mobile overlay"/>
+    <aura:method access="public" name="closeModal" action="{!c.closeModal}" description="Closes the mobile overlay"/>
+    
+    <aura:attribute access="public" name="cancelAction" type="Aura.Action" default="{!c.closeModal}"/>
+    <aura:attribute access="public" name="closedAction" type="Aura.Action"/>
+    
+    <aura:handler name="destroy" value="{!this}" action="{!c.handleDestroy}"/>
+    <aura:handler name="change" value="{!v.title}" action="{!c.headerChange}"/>
+    <aura:handler name="change" value="{!v.titleCancel}" action="{!c.bodyChange}"/>
+    
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    
+    <h2 aura:id="header" class="title slds-text-heading--medium">{!v.title}</h2>
+    <div aura:id="body" class="forceModalActionContainer--bodyAction forceModalActionContainer slds-modal__menu">
+        {!v.body}
+        <aura:if isTrue="{!v.showCancel}">
+            <button class="slds-button slds-button--neutral uiButton forceActionButton" onclick="{!v.cancelAction}">
+                <span class=" label bBody">{!v.titleCancel}</span>
+            </button>
+        </aura:if>
+    </div>
+    <div style="display: none;"/>
+</aura:component>

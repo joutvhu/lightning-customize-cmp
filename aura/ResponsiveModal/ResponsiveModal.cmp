@@ -34,20 +34,20 @@
     <aura:attribute access="public" name="closedAction" type="Aura.Action"/>
     
     <aura:if isTrue="{!$Browser.isPhone || $Browser.isTablet}">
-        <c:MSA_MobileOverlay aura:id="caseOverlay" title="{!v.title}" spinner="{!v.spinner}" showTime="{!v.showTime}"
-                             status="{!v.status}" messageStatus="{!v.messageStatus}" titleOK="{!v.titleOK}" titleCancel="{!v.titleCancel}"
-                             showOk="{!v.showOk}" showCancel="{!v.showCancel}" diableOK="{!v.diableOK}"
-                             okAction="{!v.okAction}" cancelAction="{!v.cancelAction}" closedAction="{!v.closedAction}">
+        <c:MobileOverlay aura:id="caseOverlay" title="{!v.title}" spinner="{!v.spinner}" showTime="{!v.showTime}"
+                         status="{!v.status}" messageStatus="{!v.messageStatus}" titleOK="{!v.titleOK}" titleCancel="{!v.titleCancel}"
+                         showOk="{!v.showOk}" showCancel="{!v.showCancel}" diableOK="{!v.diableOK}"
+                         okAction="{!v.okAction}" cancelAction="{!v.cancelAction}" closedAction="{!v.closedAction}">
             {!v.body}
-        </c:MSA_MobileOverlay>
+        </c:MobileOverlay>
         <aura:set attribute="else">
-            <c:MSA_CommonModal aura:id="caseModal" title="{!v.title}" size="{!v.size}" showTime="{!v.showTime}" status="{!v.status}"
-                               messageStatus="{!v.messageStatus}" titleOK="{!v.titleOK}" titleSaveAndNew="{!v.titleSaveAndNew}" titleCancel="{!v.titleCancel}"
-                               showOk="{!v.showOk}" showSaveAndNew="{!v.showSaveAndNew}" showCancel="{!v.showCancel}"
-                               diableOK="{!v.diableOK}" diableSaveAndNew="{!v.diableSaveAndNew}"
-                               okAction="{!v.okAction}" saveAndNewAction="{!v.saveAndNewAction}" cancelAction="{!v.cancelAction}" closedAction="{!v.closedAction}">
+            <c:CommonModal aura:id="caseModal" title="{!v.title}" size="{!v.size}" showTime="{!v.showTime}" status="{!v.status}"
+                           messageStatus="{!v.messageStatus}" titleOK="{!v.titleOK}" titleSaveAndNew="{!v.titleSaveAndNew}" titleCancel="{!v.titleCancel}"
+                           showOk="{!v.showOk}" showSaveAndNew="{!v.showSaveAndNew}" showCancel="{!v.showCancel}"
+                           diableOK="{!v.diableOK}" diableSaveAndNew="{!v.diableSaveAndNew}"
+                           okAction="{!v.okAction}" saveAndNewAction="{!v.saveAndNewAction}" cancelAction="{!v.cancelAction}" closedAction="{!v.closedAction}">
                 {!v.body}
-            </c:MSA_CommonModal>
+            </c:CommonModal>
         </aura:set>
     </aura:if>
 </aura:component>
