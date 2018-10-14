@@ -10,6 +10,7 @@
         <members>MobileModal</members>
         <members>ResponsiveModal</members>
         <members>MobileActionModal</members>
+        <members>RecordTypesModal</members>
         <members>MultipleLookup</members>
         <name>AuraDefinitionBundle</name>
     </types>

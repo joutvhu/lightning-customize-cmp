@@ -1,0 +1,21 @@
+.THIS.forceChangeRecordType .changeRecordTypeLeftColumn {
+    float: left;
+    text-align: right;
+    padding-right: 1.5rem;
+    width: 35%;
+    font-size: .8125rem;
+    color: rgb(112, 110, 107);
+}
+.THIS.forceChangeRecordType .changeRecordTypeRightColumn {
+    float: right;
+    text-align: left;
+    width: 65%;
+}
+.THIS.forceChangeRecordType .changeRecordTypeItemDescription {
+    margin-left: 1.5rem;
+    padding-bottom: .75rem;
+    padding-left: 1.5rem;
+    text-align: left;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}

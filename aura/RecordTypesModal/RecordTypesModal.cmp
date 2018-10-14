@@ -1,0 +1,51 @@
+<aura:component >
+    <aura:attribute access="public" name="status" type="String" default="init"/>
+    <aura:attribute access="public" name="title" type="String" default="Select New Record Type"/>
+    <aura:attribute access="public" name="recordTypes" type="Object"/>
+    <aura:attribute access="public" name="recordType" type="Object"/>
+    
+    <aura:attribute access="public" name="onSelect" type="Aura.Action"/>
+    <aura:attribute access="public" name="onCancel" type="Aura.Action"/>
+    <aura:attribute access="public" name="onClosed" type="Aura.Action"/>
+    
+    <aura:method access="public" name="openModal" action="{!c.openModal}" description="Opens the modal"/>
+    <aura:method access="public" name="hideModal" action="{!c.hideModal}" description="Hide the modal"/>
+    <aura:method access="public" name="showModal" action="{!c.showModal}" description="Reshow the modal"/>
+    <aura:method access="public" name="closeModal" action="{!c.closeModal}" description="Closes the modal"/>
+    
+    <aura:method access="public" name="hideMessage" action="{!c.hideMessage}"/>
+    <aura:method access="public" name="showMessage" action="{!c.showMessage}">
+        <aura:attribute name="title" type="String"/>
+        <aura:attribute name="type" type="String" default="error"/>
+        <aura:attribute name="list" type="String[]"/>
+    </aura:method>
+    
+	<aura:if isTrue="{!$Browser.isPhone || $Browser.isTablet}">
+        <c:MobileActionModal aura:id="mobileRecordType" title="Select New Record Type" status="{!v.status}" cancelAction="{!v.onCancel}" closedAction="{!v.onClosed}">
+            <aura:iteration items="{!v.recordTypes}" var="recordType" indexVar="index">
+                <button class="slds-button slds-button--neutral uiButton forceActionButton" data-key="{!recordType.Id}" onclick="{!c.recordTypeAction}">
+                    <span class="label bBody" data-key="{!recordType.Id}">{!recordType.Name}</span>
+                </button>
+            </aura:iteration>
+        </c:MobileActionModal>
+        <aura:set attribute="else">
+            <c:ResponsiveModal aura:id="modalRecordType" title="{!v.title}" status="{!v.status}" titleOK="Next" size="small"
+                               okAction="{!c.handleNext}" cancelAction="{!v.onCancel}" closedAction="{!v.onClosed}">
+                <div class="cRecordTypesModal forceChangeRecordType changeRecordTypeRow">
+                    <fieldset class="slds-form-element slds-no-space firefox-fieldset-bug-fix">
+                        <div class="changeRecordTypeLeftColumn">
+                            <legend class="form-element__legend slds-form-element__label">Select a record type</legend>
+                        </div>
+                        <div class="changeRecordTypeRightColumn slds-form-element__control">
+                            <aura:iteration items="{!v.recordTypes}" var="recordType" indexVar="index">
+                                <lightning:input name="recordTypeRadio" type="radio" label="{!recordType.Name}" value="{!recordType}" onchange="{!c.recordTypeChange}"
+                                                 checked="{!or(and(!empty(v.recordType), v.recordType.Id == recordType.Id), and(empty(v.recordType), index == 0))}"/>
+                                <div class="changeRecordTypeItemDescription">{!recordType.Description}</div>
+                            </aura:iteration>
+                        </div>
+                    </fieldset>
+                </div>
+            </c:ResponsiveModal>
+        </aura:set>
+    </aura:if>
+</aura:component>
