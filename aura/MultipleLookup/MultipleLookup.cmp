@@ -1,0 +1,134 @@
+<aura:component controller="MultipleLookupController">
+    <aura:attribute access="public" name="label" type="String"/>
+    <aura:attribute access="public" name="helptext" type="String"/>
+    <aura:attribute access="public" name="icon" type="String" default="standard:account"/>
+    <aura:attribute access="public" name="finder" type="String" required="true"/>
+    <aura:attribute access="public" name="search" type="String" default=""/>
+    <aura:attribute access="public" name="ids" type="List" default="[]"/>
+    <aura:attribute access="public" name="values" type="Object"/>
+    <aura:attribute access="public" name="other" type="Object"/>
+    <aura:attribute access="public" name="listerror" type="Object"/>
+    <aura:attribute access="public" name="limitselected" type="Integer" required="true" default="0"/>
+    <aura:attribute access="public" name="limitsearch" type="Integer" required="true" default="5"/>
+    <aura:attribute access="public" name="showlabel" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="required" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="haserror" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="autoerror" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="error" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="readonly" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="cleansearch" type="Boolean" default="true"/>
+    
+    <aura:attribute access="private" name="options" type="Object"/>
+    <aura:attribute access="private" name="info" type="Object"/>
+    <aura:attribute access="private" name="focused" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="totalloading" type="Integer" default="0"/>
+    <aura:attribute access="private" name="loading" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="hover" type="Object"/>
+    <aura:attribute access="private" name="esc" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="isover" type="Boolean" default="false"/>
+    
+    <aura:attribute access="private" name="mainstyle" type="String" default="uiInput forceSearchInputLookupDesktop"/>
+    <aura:attribute access="private" name="containerstyle" type="String" default="lookupContainer contentWrapper slds-box--border"/>
+    <aura:attribute access="private" name="searchstyle" type="String" default="invisible undefined lookup__menu uiAbstractList uiAutocompleteList uiInput uiAutocomplete uiInput--default uiInput--lookup"/>
+    <aura:attribute access="private" name="liststyle" type="String" default="lookup__list"/>
+    <aura:attribute access="private" name="loadstyle" type="String" default=""/>
+    <aura:attribute access="private" name="emptystyle" type="String" default=""/>
+    <aura:attribute access="private" name="searchboxstyle" type="String" default="inputWrapper searchBox"/>
+    
+    <aura:attribute access="public" name="onSearch" type="Aura.Action"/>
+    <aura:attribute access="public" name="onChange" type="Aura.Action"/>
+    
+    <aura:method access="public" name="reset" action="{!c.handlerReset}"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <aura:handler name="change" value="{!v.search}" action="{!c.handlerSearchChange}"/>
+    <aura:handler name="change" value="{!v.haserror}" action="{!c.handlerErrorChange}"/>
+    <aura:handler name="change" value="{!v.focused}" action="{!c.handlerFocusedChange}"/>
+    <aura:handler name="change" value="{!v.loading}" action="{!c.handlerLoadingChange}"/>
+    <aura:handler name="change" value="{!v.readonly}" action="{!c.handlerReadOnlyChange}"/>
+    <aura:handler name="change" value="{!v.values}" action="{!c.handlerValuesChange}"/>
+    <aura:handler name="change" value="{!v.ids}" action="{!c.handlerIdsChange}"/>
+    <aura:handler name="change" value="{!v.esc}" action="{!c.handlerESCChange}"/>
+    
+    <div class="{!v.mainstyle}">
+        <aura:if isTrue="{!and(v.showlabel, !empty(v.label))}">
+            <label class="label inputLabel uiLabel-left form-element__label uiLabel">
+                <aura:if isTrue="{!v.required}">
+                    <span class="required">*</span>
+                </aura:if>
+                <span>{!v.label}</span>
+                <aura:if isTrue="{!!empty(v.helptext)}">
+                    <lightning:helptext class="tooltip-trigger" content="{!v.helptext}"/>
+                </aura:if>
+            </label>
+        </aura:if>
+        <div class="{!v.containerstyle}">
+            <ui:scrollerWrapper class="selectedItemes">
+                <aura:iteration items="{!v.values}" var="value">
+                    <div class="pillContainerListItem multipleSelected" data-id="{!value.id}">
+                        <div class="pill uiPill--default uiPill">
+                            <lightning:icon class="pillIcon" iconName="{!v.icon}" size="small"/>
+                            <span class="pillText">{!value.title}</span>
+                            <aura:if isTrue="{!not(v.readonly)}">
+                                <a class="singlePill uiPill--default" href="javascript:void(0);" data-id="{!value.id}"
+                                   onclick="{!c.onRemoveValue}">
+                                    <span class="deleteIcon"></span>
+                                </a>
+                            </aura:if>
+                        </div>
+                    </div>
+                </aura:iteration>
+            </ui:scrollerWrapper>
+            <div class="{!v.searchboxstyle}" onmouseover="{!c.onMouseOver}" onmouseout="{!c.onMouseOut}">
+                <div class="inputLookupIcon slds-float--right slds-input-has-icon slds-p-top--xx-small slds-p-right--small" onclick="{!c.onSearch}">
+                    <lightning:icon iconName="utility:search" size="xx-small" alternativeText="{!'Search ' + v.info.objectName}"/>
+                </div>
+                <div class="autocompleteWrapper slds-grow">
+                    <input aura:id="input-search" type="text" maxlength="500" placeholder="{!'Search ' + v.info.objectName + '...'}" value="{!v.search}" disabled="{!v.readonly}"
+                           title="{!'Search ' + v.info.objectName}" aria-expanded="true" aria-autocomplete="list" aria-haspopup="true" spellcheck="false" role="combobox"
+                           class="default input uiInput uiInputTextForAutocomplete uiInput--default uiInput--input uiInput uiAutocomplete uiInput--default uiInput--lookup"
+                           onfocus="{!c.onFocus}" onblur="{!c.onBlur}" onpaste="{!c.onPaste}" oncut="{!c.onCut}" onkeyup="{!c.onKeyUp}" onkeydown="{!c.onKeyDown}"/>
+                    <div class="{!v.searchstyle}" role="listbox">
+                        <div class="listContent">
+                            <ul class="{!v.liststyle}" role="presentation">
+                                <aura:iteration items="{!v.options}" var="item">
+                                    <li aura:id="{!'li-' + item.id}" data-id="{!item.id}"
+                                        class="{!if(v.hover == item.id, 'lookup__item default highlighted uiAutocompleteOption forceSearchInputLookupDesktopOption', 'lookup__item default uiAutocompleteOption forceSearchInputLookupDesktopOption')}"
+                                        role="presentation" onclick="{!c.onSelectItem}">
+                                        <a href="javascript:void(0);" role="option">
+                                            <div class="mruIcon slds-icon slds-icon--small slds-float--left slds-m-vertical--xx-small slds-m-left--xx-small slds-media__figure forceEntityIcon">
+                                                <lightning:icon iconName="{!v.icon}" size="small"/>
+                                            </div>
+                                            <div class="slds-m-left--smalllabels slds-truncate slds-media__body">
+                                                <div class="primaryLabel slds-truncate slds-lookup__result-text" title="{!item.title}">{!item.title}</div>
+                                                <aura:if isTrue="{!!empty(item.find)}">
+                                                    <div class="item-second-label" title="{!item.find}">{!item.find}</div>
+                                                </aura:if>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </aura:iteration>
+                            </ul>
+                            <div class="emptyListContent" style="{!v.emptystyle}">
+                                <div class="slds-hide"></div>
+                            </div>
+                            <div class="loadingIndicator" style="{!v.loadstyle}">
+                                <div class="background">
+                                    <span class="label">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!!empty(v.listerror)}">
+        <ul class="has-error uiInputDefaultError uiInput forceSearchInputLookupDesktop uiInput--default">
+            <aura:iteration items="{!v.listerror}" var="error">
+                <li class="form-element__help">{!error}</li>
+            </aura:iteration>
+        </ul>
+    </aura:if>
+</aura:component>

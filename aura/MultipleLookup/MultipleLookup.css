@@ -1,0 +1,65 @@
+.THIS .lookupContainer {
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+}
+.THIS .lookupContainer .selectedItemes {
+    display: block;
+    height: 10rem;
+    margin: 1px;
+    margin-bottom: 0;
+    padding: .3rem;
+    overflow-y: scroll;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    background-color: #fdfdfd;
+}
+.THIS .pillContainerListItem {
+    position: relative;
+    padding: .1rem 0;
+    width: 100%;
+}
+.THIS .multipleSelected .uiPill {
+    position: relative;
+    display: flex;
+    text-decoration: none;
+    cursor: default;
+    color: rgb(62, 62, 60);
+}
+.THIS .multipleSelected .pillText {
+    flex: 1;
+    max-width: none !important;
+}
+.THIS .multipleSelected .singlePill {
+    text-decoration: none;
+    cursor: default;
+    padding-right: 0;
+}
+.THIS .searchBox {
+    position: relative;
+    border-radius: .25rem;
+    border-top: 1px solid rgb(221, 219, 218);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.THIS .searchBox input {
+    position: relative;
+    min-height: 1.875rem;
+}
+.THIS .searchBox .uiInput--lookup.lookup__menu {
+    width: 100%;
+}
+.THIS .searchBox ul {
+    list-style: none;
+}
+.THIS .pillIcon svg.slds-icon {
+    max-width: 100%;
+    max-height: 100%;
+}
+.THIS .listContent .loadingIndicator {
+    position: relative;
+}
+.THIS .searchBox.disabled {
+    background-color: rgb(236, 235, 234);
+    border-color: #a8b7c7;
+    cursor: not-allowed;
+}
