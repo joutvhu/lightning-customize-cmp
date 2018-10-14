@@ -1,6 +1,7 @@
 ({
     /*
-     * @author: giao.ho
+     * @author: Giao Ho
+     * @email: loveme05ye@gmail.com
      */
 	doInit : function(component, event, helper) {
 		var row = component.get('v.row'),

@@ -1,4 +1,8 @@
 ({
+    /*
+     * @author: Giao Ho
+     * @email: loveme05ye@gmail.com
+     */
 	changeStyle : function(component) {
         var islist = component.get('v.islist'),
             hide = component.get('v.hide'),

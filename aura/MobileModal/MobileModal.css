@@ -1,0 +1,83 @@
+.THIS .success {
+    color: white;
+    background-color: #04844b;
+}
+.THIS .success ~ .errorsList {
+    color: #04844b;
+}
+.THIS .warning {
+    color: white;
+    background-color: #ffb75d;
+}
+.THIS .warning ~ .errorsList {
+    color: #ffb75d;
+}
+.THIS .error {
+    color: white;
+    background-color: #c23934;
+}
+.THIS .error ~ .errorsList {
+    color: #c23934;
+}
+.THIS .info {
+    color: white;
+    background-color: #706e6b;
+}
+.THIS .info ~ .errorsList {
+    color: #706e6b;
+}
+.THIS .modal-container {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.THIS .slds-modal__header {
+    border: none;
+    padding: 0;
+}
+.THIS .modal-body {
+    flex: 1;
+}
+.THIS .slds-p-around--medium {
+    padding: 0;
+}
+.THIS .inputLabel {
+    font-size: .75rem;
+    font-weight: normal;
+}
+.THIS .uiInput--lookup .lookup__item>a {
+    color: rgb(62, 62, 60);
+}
+.THIS .scrollerMax {
+    height: 100%; 
+}
+.THIS .scrollerSize {
+    height: 100vh;
+}
+.THIS .over-body {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: hidden;
+    height: 100%;
+}
+.THIS .forceModalSpinner {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.THIS .modal-header.slds-modal__header {
+    height: 66px;
+}
+.THIS .slds-spinner_container.over-spinner {
+    position: fixed;
+    top: 66px;
+}

@@ -1,0 +1,31 @@
+.THIS .success {
+    color: white;
+    background-color: #04844b;
+}
+.THIS .success ~ .errorsList {
+    color: #04844b;
+}
+.THIS .warning {
+    color: white;
+    background-color: #ffb75d;
+}
+.THIS .warning ~ .errorsList {
+    color: #ffb75d;
+}
+.THIS .error {
+    color: white;
+    background-color: #c23934;
+}
+.THIS .error ~ .errorsList {
+    color: #c23934;
+}
+.THIS .info {
+    color: white;
+    background-color: #706e6b;
+}
+.THIS .info ~ .errorsList {
+    color: #706e6b;
+}
+.THIS .pageLevelErrors:focus {
+    outline: none;
+}

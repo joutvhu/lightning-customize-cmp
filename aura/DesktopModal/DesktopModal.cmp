@@ -1,0 +1,90 @@
+<aura:component >
+    <aura:attribute access="public" name="type" type="String" default="modal"/>
+    <aura:attribute access="public" name="status" type="String" default="init"/>
+    <aura:attribute access="public" name="messageStatus" type="String" default="hide"/>
+    <aura:attribute access="public" name="title" type="String" description="The optional title of the modal. If it is empty, the header block is not displayed." />
+    <aura:attribute access="public" name="body" type="Aura.Component[]"/>
+    <aura:attribute access="public" name="showCancel" type="Boolean" default="true"/>
+    <aura:attribute access="public" name="showSaveAndNew" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="showOk" type="Boolean" default="true"/>
+    <aura:attribute access="public" name="diableOK" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="diableSaveAndNew" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="titleCancel" type="String" default="Cancel"/>
+    <aura:attribute access="public" name="titleSaveAndNew" type="String" default="Save &amp; New"/>
+    <aura:attribute access="public" name="titleOK" type="String" default="Save"/>
+    <aura:attribute access="public" name="size" type="String" default="medium"/>
+    <aura:attribute access="public" name="showTime" type="Integer" default="5000"/>
+    
+    <aura:attribute access="private" name="show" type="Integer" default="-1"/>
+    <aura:attribute access="private" name="overlay" type="Object"/>
+    <aura:attribute access="private" name="components" type="Object"/>
+    <aura:attribute access="private" name="isShowMessage" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="message" type="String"/>
+    <aura:attribute access="private" name="messageType" type="String"/>
+    <aura:attribute access="private" name="messageList" type="String[]"/>
+    <aura:attribute access="private" name="showMessageList" type="Boolean" default="false"/>
+    
+    <aura:method access="public" name="openModal" action="{!c.openModal}" description="Opens the modal"/>
+    <aura:method access="public" name="hideModal" action="{!c.hideModal}" description="Hide the modal"/>
+    <aura:method access="public" name="showModal" action="{!c.showModal}" description="Reshow the modal"/>
+    <aura:method access="public" name="closeModal" action="{!c.closeModal}" description="Closes the modal"/>
+    
+    <aura:method access="public" name="hideMessage" action="{!c.hideMessage}"/>
+    <aura:method access="public" name="showMessage" action="{!c.showMessage}">
+        <aura:attribute name="title" type="String"/>
+        <aura:attribute name="type" type="String" default="error"/>
+        <aura:attribute name="list" type="String[]"/>
+    </aura:method>
+    
+    <aura:attribute access="public" name="cancelAction" type="Aura.Action" default="{!c.closeModal}"/>
+    <aura:attribute access="public" name="saveAndNewAction" type="Aura.Action"/>
+    <aura:attribute access="public" name="okAction" type="Aura.Action" default="{!c.closeModal}"/>
+    <aura:attribute access="public" name="closedAction" type="Aura.Action"/>
+    
+    <aura:handler name="destroy" value="{!this}" action="{!c.handleDestroy}"/>
+    <aura:handler name="change" value="{!v.title}" action="{!c.titleChange}"/>
+    <aura:handler name="change" value="{!v.diableOK}" action="{!c.footerChange}"/>
+    <aura:handler name="change" value="{!v.diableSaveAndNew}" action="{!c.footerChange}"/>
+    <aura:handler name="change" value="{!v.titleOK}" action="{!c.footerChange}"/>
+    <aura:handler name="change" value="{!v.titleSaveAndNew}" action="{!c.footerChange}"/>
+    <aura:handler name="change" value="{!v.titleCancel}" action="{!c.footerChange}"/>
+    
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    
+    <h2 aura:id="header" class="over-header title slds-text-heading_medium">{!v.title}</h2>
+    <div aura:id="body" class="over-body slds-card slds-clearfix" data-aura-class="forceDetailPanel">
+        <div aura:id="page-error" class="pageLevelErrors" tabindex="-1">
+            <aura:if isTrue="{!v.isShowMessage}">
+                <div class="desktop forcePageError" aria-live="assertive" data-aura-class="forcePageError">
+                    <div class="{!'genericNotification ' + v.messageType}">
+                        <span class="genericError uiOutputText" data-aura-class="uiOutputText">{!v.message}</span>
+                    </div>
+                    <aura:if isTrue="{!v.showMessageList}">
+                        <ul class="errorsList">
+                            <aura:iteration items="{!v.messageList}" var="item">
+                                <li>{!item}</li>
+                            </aura:iteration>
+                        </ul>
+                    </aura:if>
+                </div>
+            </aura:if>
+        </div>
+        <div class="test-id__record-layout-container riseTransitionEnabled">
+            <aura:if isTrue="{!equals(v.type, 'body')}">
+            	{!v.body}
+            </aura:if>
+        </div>
+    </div>
+    <div aura:id="footer" class="over-footer">
+        <aura:if isTrue="{!v.showCancel}">
+            <button class="slds-button slds-button_neutral" onclick="{!v.cancelAction}">{!v.titleCancel}</button>
+        </aura:if>
+        <aura:if isTrue="{!and(v.showSaveAndNew, v.saveAndNewAction != null)}">
+            <button class="slds-button slds-button_neutral" onclick="{!v.saveAndNewAction}" disabled="{!v.diableSaveAndNew}">{!v.titleSaveAndNew}</button>
+        </aura:if>
+        <aura:if isTrue="{!v.showOk}">
+            <button class="slds-button slds-button_brand"  onclick="{!v.okAction}" disabled="{!v.diableOK}">{!v.titleOK}</button>
+        </aura:if>
+    </div>
+    <div style="display: none;"/>
+</aura:component>
