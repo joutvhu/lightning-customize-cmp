@@ -1,0 +1,9 @@
+<design:component>
+   <design:attribute name="pauseLabel" label="Pause Label"/>
+   <design:attribute name="backLabel" label="Back Label"/>
+   <design:attribute name="resumeLabel" label="Resume Label"/>
+   <design:attribute name="nextLabel" label="Next Label"/>
+   <design:attribute name="finishLabel" label="Finish Label"/>
+   <design:attribute name="customButtons" label="Custom Buttons"/>
+   <design:attribute name="action" label="Action"/>
+</design:component>

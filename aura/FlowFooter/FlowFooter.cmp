@@ -1,0 +1,22 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global">
+    <aura:attribute access="global" name="pauseLabel" type="String" default="Pause"/>
+    <aura:attribute access="global" name="backLabel" type="String" default="Previous"/>
+    <aura:attribute access="global" name="resumeLabel" type="String" default="Resume"/>
+    <aura:attribute access="global" name="nextLabel" type="String" default="Next"/>
+    <aura:attribute access="global" name="finishLabel" type="String" default="Finish"/>
+    <aura:attribute access="global" name="customButtons" type="String"/>
+    <aura:attribute access="global" name="action" type="String"/>
+    
+    <aura:attribute access="private" name="buttons" type="Object"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <footer class="slds-card__footer actionButtonBar slds-clearfix">
+        <div class="actionsLeft slds-float_left"/>
+        <div class="actionsRight slds-float_right">
+            <aura:iteration items="{!v.buttons}" var="button">
+                <lightning:button name="{!button.name}" label="{!button.label}" variant="{!button.variant}" onclick="{!c.onButtonPressed}"/>
+            </aura:iteration>
+        </div>
+    </footer>
+</aura:component>
