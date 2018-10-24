@@ -15,7 +15,7 @@
 Antilocker.EventPublisher.events()
 ```
 
-- Publish an event
+- Publish events
 
 ```
 Antilocker.EventPublisher.publish('markup://force:navigateBack');
