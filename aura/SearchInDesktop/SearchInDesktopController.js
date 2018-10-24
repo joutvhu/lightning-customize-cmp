@@ -56,7 +56,7 @@
                         component.set('v.data', data);
                     }
                 }
-                event.getSource().set("v.isLoading", false);
+                event.getSource().set('v.isLoading', false);
             }, false);
         }
     },
@@ -73,7 +73,7 @@
                     value : selectedRows[0]
                 });
             }
-            component.find("searchModal").closeModal();
+            component.find('searchModal').closeModal();
         }
     },
     onSort : function(component, event, helper) {

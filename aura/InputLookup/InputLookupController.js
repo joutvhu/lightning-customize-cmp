@@ -5,7 +5,7 @@
      */
     doInit : function(component, event, helper) {
         var issearch = component.get('v.issearch');
-        helper.ismobile = $A.get("$Browser.isPhone") || $A.get("$Browser.isTablet");
+        helper.ismobile = $A.get('$Browser.isPhone') || $A.get('$Browser.isTablet');
         helper.changesearchmodal(component);
         helper.init(component);
         helper.changefocus(component);

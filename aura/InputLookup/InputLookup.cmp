@@ -1,4 +1,4 @@
-<aura:component controller="MSA_InputLookupController">
+<aura:component controller="InputLookupController">
     <aura:attribute access="public" name="label" type="String"/>
     <aura:attribute access="public" name="icon" type="String" default="standard:account"/>
     <aura:attribute access="public" name="finder" type="String" required="true"/>

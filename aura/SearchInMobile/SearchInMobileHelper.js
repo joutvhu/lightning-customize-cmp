@@ -50,7 +50,7 @@
         for(var i = 0; i < options.length; i++)
             if(options[i].id == id) {
                 component.set('v.value', options[i]);
-                component.find("searchMobile").closeModal();
+                component.find('searchMobile').closeModal();
                 break;
             }
     },

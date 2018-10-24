@@ -6,11 +6,11 @@
     openModal : function(component, event, helper) {
 		component.set('v.search', '');
         component.set('v.value', null);
-		component.find("searchMobile").openModal();
+		component.find('searchMobile').openModal();
         helper.search(component);
 	},
     closeModal : function(component, event, helper) {
-		component.find("searchMobile").closeModal();
+		component.find('searchMobile').closeModal();
 	},
     handlerSearchChange : function(component, event, helper) {
         helper.search(component);

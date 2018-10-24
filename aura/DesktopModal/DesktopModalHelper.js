@@ -35,7 +35,7 @@
                 cancelAction: component.get('v.cancelAction')
             }]
         ], function(components, status) {
-            if (status === "SUCCESS")
+            if (status === 'SUCCESS')
             {
                 component.set('v.components', components);
                 component.set('v.overlay', component.find('overlayLib').showCustomModal({
@@ -99,6 +99,6 @@
                 component.set('v.messageStatus', 'hide');
             }), time
         );
-        component.find("page-error").getElement().focus();
+        component.find('page-error').getElement().focus();
     }
 })

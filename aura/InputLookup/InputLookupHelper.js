@@ -353,7 +353,7 @@
         this.changehoveritem(component);
     },
     opensearch : function(component) {
-        var mobilemodal = component.find("mobileModal");
+        var mobilemodal = component.find('mobileModal');
         if(mobilemodal) {
             component.set('v.openmobile', true);
             component.find('input-search').getElement().blur();
