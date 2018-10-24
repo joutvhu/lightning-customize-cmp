@@ -15,5 +15,9 @@
         <members>FlowFooter</members>
         <name>AuraDefinitionBundle</name>
     </types>
+    <types>
+        <members>antilocker</members>
+        <name>StaticResource</name>
+    </types>
     <version>43.0</version>
 </Package>
