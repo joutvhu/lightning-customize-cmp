@@ -1,0 +1,109 @@
+<aura:component controller="MSA_InputLookupController">
+    <aura:attribute access="public" name="icon" type="String" default="standard:account"/>
+    <aura:attribute access="public" name="title" type="String"/>
+    <aura:attribute access="public" name="search" type="String"/>
+    <aura:attribute access="public" name="objectName" type="String"/>
+    <aura:attribute access="public" name="finder" type="String" required="true"/>
+    <aura:attribute access="public" name="value" type="Object"/>
+    <aura:attribute access="public" name="showFields" type="Object"/>
+    <aura:attribute access="public" name="data" type="Object"/>
+    <aura:attribute access="public" name="columns" type="Object"/>
+    <aura:attribute access="public" name="selectId" type="String"/>
+    <aura:attribute access="public" name="limit" type="Integer" required="true" default="50"/>
+    <aura:attribute access="public" name="other" type="Object"/>
+    
+    <aura:attribute access="private" name="selectValue" type="Object"/>
+    <aura:attribute access="private" name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="spinning" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="loading" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="noResult" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="searchNoResult" type="String"/>
+    <aura:attribute access="private" name="enableLoading" type="Boolean" default="true"/>
+    <aura:attribute access="private" name="sortedBy" type="String"/>
+    <aura:attribute access="private" name="sortedDirection" type="String"/>
+    <aura:attribute access="private" name="defaultSortDirection" type="String" default="asc"/>
+    <aura:attribute access="private" name="sortables" type="Object"/>
+    
+    <aura:attribute access="private" name="headerstyle" type="String" default="slds-page-header slds-page-header_joined slds-is-relative forceSearchSearchResultsGridHeader forceSearchResultsGridView"/>
+    <aura:attribute access="private" name="viewstyle" type="String" default="grid slds-table_joined gridInScroller slds-is-relative forceSearchResultsGridView"/>
+    <aura:attribute access="private" name="holderstyle" type="String" default="page-placeholder slds-hide"/>
+    <aura:attribute access="private" name="resultstyle" type="String" default="forceSearchResultsGridView forceSearchNoResults slds-text-body--regular slds-page-header slds-theme_default slds-hide"/>
+
+    <aura:handler name="change" value="{!v.columns}" action="{!c.handlerColumnsChange}"/>
+    <aura:handler name="change" value="{!v.loading}" action="{!c.handlerLoadingChange}"/>
+    <aura:handler name="change" value="{!v.noResult}" action="{!c.handlerResultChange}"/> 
+    
+    <aura:method access="public" name="openModal" action="{!c.openModal}" description="Opens the mobile overlay"/>
+    
+    <aura:attribute access="public" name="closedAction" type="Aura.Action"/>
+    
+    <c:DesktopModal aura:id="searchModal" title="{!v.title}" closedAction="{!c.onClosed}"
+                    cancelAction="{!c.closeModal}" showOk="false" size="large">
+        <div class="content slds-scrollable_none slds-is-relative forceSearchLookupAdvanced cSearchInDesktop">
+            <a style="width: 0; opacity: 0; height: 0; border: none; padding: 0; margin: 0;" href="javascript:void(0);"/>
+            <c:InputLookup finder="{!v.finder}" issearch="false" showlabel="true" label="{!v.title}"
+                           value="{!v.selectValue}" search="{!v.search}" icon="{!v.icon}" other="{!v.other}"
+                           onSearch="{!c.onSearch}" onSearchIn="{!c.onSearch}" onChange="{!c.onChange}"/>
+            <div aura:id="view-search" class="searchWrapper slds-is-relative">
+                <div class="slds-grid forceSearchSearch">
+                    <div class="searchScrollerWrapper">
+                        <div class="resultsWrapper" tabindex="-1">
+                            <div class="forceSearchResultsRegion slds-grid slds-grid--vertical">
+                                <div class="{!v.headerstyle}">
+                                    <div class="searchResultsGridHeader slds-grid slds-grid--vertical-align-center">
+                                        <div class="leftContent slds-col slds-wrap slds-text-body--small slds-text-color--weak">
+                                            <h2 class="slds-m-bottom--xx-small">
+                                                <div class="gridTitle slds-text-heading--medium slds-text-color--default">
+                                                    {!v.objectName}
+                                                </div>
+                                            </h2>
+                                            <div class="slds-list_horizontal" aria-live="polite" aria-atomic="true">
+                                                <div class="searchResultsSummary slds-text-body--small slds-text-color--weak">
+                                                    <div class="{!if(v.enableLoading,'slds-hide','')}">
+                                                        <p>{!v.data.length} Results</p>
+                                                    </div>
+                                                    <div class="{!if(v.enableLoading,'','slds-hide')}">
+                                                        <p>{!v.data.length}+ Results</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="{!v.viewstyle}">
+                                    <aura:if isTrue="{!v.spinning}">
+                                        <lightning:spinner variant="brand" size="medium"/>
+                                    </aura:if>
+                                    <div class="searchScroller slds-is-absolute uiScroller scroller-wrapper scroll-bidirectional native">
+                                        <div class="scroller actionBarPlugin fixedHeaderPlugin">
+                                            <lightning:datatable aura:id="tableID" columns="{!v.columns}" data="{!v.data}"
+                                                                 keyField="Id" class="data-grid" maxRowSelection="1"
+                                                                 enableInfiniteLoading="{!v.enableLoading}"
+                                                                 defaultSortDirection="{!v.defaultSortDirection}"
+                                                                 sortedBy="{!v.sortedBy}" sortedDirection="{!v.sortedDirection}"
+                                                                 isLoading="{!v.isLoading}" onloadmore="{!c.onLoadMore}"
+                                                                 onrowselection="{!c.onRowSelection}" onsort="{!c.onSort}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="{!v.resultstyle}">
+                                    <div class="noResults slds-align--absolute-center slds-grid--vertical slds-text-align--center slds-text-color--weak">
+                                        <figure class="slds-p-bottom--xx-large">
+                                            <span class="uiImage" data-aura-class="uiImage">
+                                                <img src="/img/search/no-results.png" class="" alt="No results found"/>
+                                            </span>
+                                        </figure>
+                                        <div class="slds-text-heading--large noResultsTitle">No results for "{!v.searchNoResult}" in {!v.objectName}.</div>
+                                    </div>
+                                </div>
+                                <div class="{!v.holderstyle}">
+                                    <c:Placeholder islist="true" hide="false" class="gridStencil slds-card forceSearchResultsGridView"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:DesktopModal>
+</aura:component>

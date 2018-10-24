@@ -1,0 +1,54 @@
+.THIS .data-grid, .THIS lightning-datatable {
+    height: 250px;
+}
+.THIS .searchWrapper {
+    margin-top: 1rem;
+}
+.THIS .gridInScroller {
+    height: 100%;
+    bottom: 0;
+}
+.THIS .searchScroller .actionBarPlugin {
+    height: 100%;
+    width: 100%;
+}
+.THIS .lightning-primitive-resize-handler, .THIS .slds-resizable__handle {
+    display: none;
+}
+.THIS thead th .slds-th__action-button, .THIS thead th lightning-button-menu {
+    display: none;
+}
+.THIS tbody tr td lightning-spinner {
+    margin-top: 1rem;
+}
+.THIS .slds-page-header {
+    border-bottom: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid rgb(221, 219, 218);
+}
+.THIS .slds-page-header_joined {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.THIS .slds-table_joined {
+    border: 1px solid rgb(221, 219, 218);
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+.THIS .slds-scrollable_y {
+    min-width: 100%;
+}
+.THIS .forceSearchNoResults {
+    position: absolute;
+    z-index: 10;
+}
+.THIS .page-placeholder {
+    position: absolute;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: .25rem;
+    border: 1px solid rgb(221, 219, 218);
+}

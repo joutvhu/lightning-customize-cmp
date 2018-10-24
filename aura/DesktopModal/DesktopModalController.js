@@ -17,6 +17,9 @@
             components[2].set('v.titleOK', component.get('v.titleOK'));
             components[2].set('v.titleSaveAndNew', component.get('v.titleSaveAndNew'));
             components[2].set('v.titleCancel', component.get('v.titleCancel'));
+            components[2].set('v.showOk', component.get('v.showOk'));
+            components[2].set('v.showSaveAndNew', component.get('v.showSaveAndNew'));
+            components[2].set('v.showCancel', component.get('v.showCancel'));
         }
     },
     handleDestroy : function(component, event, helper) {

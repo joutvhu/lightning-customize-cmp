@@ -1,0 +1,70 @@
+<aura:component controller="InputLookupController">
+    <aura:attribute access="public" name="icon" type="String" default="standard:account"/>
+    <aura:attribute access="public" name="title" type="String"/>
+    <aura:attribute access="public" name="objectName" type="String" default=""/>
+    <aura:attribute access="public" name="finder" type="String" required="true"/>
+    <aura:attribute access="public" name="value" type="Object"/>
+    <aura:attribute access="public" name="limit" type="Integer" required="true" default="25"/>
+    <aura:attribute access="public" name="other" type="Object"/>
+    
+    <aura:attribute access="private" name="search" type="String" default=""/>
+    <aura:attribute access="private" name="opened" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="loading" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="totalloading" type="Integer" default="0"/>
+    <aura:attribute access="private" name="searchnoresult" type="String" default=""/>
+    <aura:attribute access="private" name="options" type="Object"/>
+    
+    <aura:attribute access="private" name="noresultstyle" type="String" default="noresults slds-item slds-p-around--small slds-hide"/>
+    
+    <aura:handler name="change" value="{!v.search}" action="{!c.handlerSearchChange}"/>
+    
+    <aura:method access="public" name="openModal" action="{!c.openModal}" description="Opens the mobile overlay"/>
+    
+    <aura:attribute access="public" name="closedAction" type="Aura.Action"/>
+    
+    <c:MobileModal aura:id="searchMobile" title="{!v.title}" closedAction="{!c.onClosed}"
+                   cancelAction="{!c.closeModal}" showOk="false" spinner="{!v.loading}">
+        <div class="forceRecordLayout forceInputLookupPanel cSearchInMobile">
+            <div class="searchBox">
+                <div class="searchBoxInner">
+                    <aura:if isTrue="{!v.opened}">
+                        <lightning:input aura:id="searchInput" type="search" label=" " placeholder="{!'Search ' + v.objectName}" value="{!v.search}"/>
+                    </aura:if>
+                </div>
+            </div>
+            <div>
+                <label class="uiLabel forceInputLookupPanelSelector">
+                    <div class="selected">
+                        <div class="eIcon forceEntityIcon">
+                            <aura:if isTrue="{!v.opened}">
+                                <lightning:icon iconName="{!v.icon}" size="medium"/>
+                            </aura:if>
+                        </div>
+                        <span class="label">{!v.objectName}</span>
+                        <br class="clearer"/>
+                    </div>
+                </label>
+                <ul class="results slds-has-dividers--top slds-has-divider--bottom">
+                    <aura:iteration items="{!v.options}" var="item">
+                        <li aura:id="{!'li-m-' + item.id}" data-id="{!item.id}" onclick="{!c.onSelectItem}"
+                            class="slds-p-around--small panelItem slds-item">
+                            <div class="slds-grid slds-wrap slds-grid--vertical-align-center">
+                                <div class="slds-size--1-of-1 slds-text-color--default slds-text-body--regular slds-truncate">
+                                    {!item.title}
+                                </div>
+                                <div class="slds-size--1-of-1 slds-text-color--weak slds-text-body--small slds-truncate disambiguation">
+                                    {!item.find}
+                                </div>
+                            </div>
+                        </li>
+                    </aura:iteration>
+                    <li class="{!v.noresultstyle}">
+                        <div class="slds-grid slds-wrap slds-grid--vertical-align-center">
+                            <div class="slds-size--1-of-1 slds-truncate">No results for "{!v.searchnoresult}" in {!v.objectName}.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </c:MobileModal>
+</aura:component>

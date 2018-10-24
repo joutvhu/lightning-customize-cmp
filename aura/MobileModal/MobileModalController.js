@@ -11,6 +11,8 @@
             components[0].set('v.diableOK', component.get('v.diableOK'));
             components[0].set('v.titleOK', component.get('v.titleOK'));
             components[0].set('v.titleCancel', component.get('v.titleCancel'));
+            components[0].set('v.showOk', component.get('v.showOk'));
+            components[0].set('v.showCancel', component.get('v.showCancel'));
         }
     },
     bodyChange : function(component, event, helper) {
